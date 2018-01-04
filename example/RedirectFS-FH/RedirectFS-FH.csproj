@@ -11,6 +11,11 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="..\..\nativelibs\linux-x64\libMonoFuseHelper.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Mono.Fuse.NETStandard\Mono.Fuse.NETStandard.csproj" />
   </ItemGroup>
   <ItemGroup>
