@@ -1,7 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <AssemblyTitle>Mono.Fuse.NETStandard.dll</AssemblyTitle>
+    <AssemblyName>Mono.Fuse.NETStandard</AssemblyName>
     <PackageId>Mono.Fuse.NETStandard</PackageId>
-    <PackageVersion>1.0.0-pre1</PackageVersion>
+    <PackageVersion>1.0.0-pre2</PackageVersion>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/alhimik45/Mono.Fuse.NETStandard/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/alhimik45/Mono.Fuse.NETStandard</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/alhimik45/Mono.Fuse.NETStandard</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <Authors>Jonathan Pryor, Alexey Kolpakov</Authors>
     <Description>Port of Mono.Fuse package to NET Standart: C# bindings for FUSE</Description>
     <PackageTags>mono fuse filesystem linux unix</PackageTags>
