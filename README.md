@@ -4,4 +4,4 @@ This is a .NET Standard binding for FUSE, port of [mono-fuse](https://github.com
 
 For documentation see [here](http://www.jprl.com/Projects/mono-fuse/docs/).
 
-To run examples clone this repository, run `build-libs.sh` and then run projects from `examples/` folder.
+To run examples clone this repository, run `build-libs.sh` and then run projects from `example/` folder.

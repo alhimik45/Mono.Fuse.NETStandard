@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedirectFS", "example\Redir
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedirectFS-FH", "example\RedirectFS-FH\RedirectFS-FH.csproj", "{1D5F7569-C773-422B-B783-3F1775816D45}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{85A3668F-D9E7-4794-8723-4F3767008CB9}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{85A3668F-D9E7-4794-8723-4F3767008CB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
