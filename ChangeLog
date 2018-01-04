@@ -1,0 +1,743 @@
+2016-06-08  Justin Needham <jneedhamspkt@gmail.com>
+	Migrate from gmcs to mcs for Mono 4.*
+	* configure.ac: gmcs --> mcs
+	* doc/en/Mono.Fuse/FileSystem.xml : gmcs --> mcs
+
+2008-04-01  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* configure.in: Error if `mono' can't be found (not continue), and continue
+	  if `monodoc' can't be found (not error).  Simplify.
+
+2008-01-30  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* configure.in: Bump version numbers; genreate mono-fuse.spec.
+	* Makefile.am: Add `rpm', `prepare-release' targets.
+	* example/HelloFS/Makefile.am, example/RedirectFS/Makefile.am,
+	  lib/mono-fuse/Makefile.am, src/Mono.Fuse/Makefile.am,
+	  src/MonoFuseHelper/Makefile.am: Enhance so `make distcheck works`.
+	* .gitignore, doc/.gitignore, example/HelloFS/.gitignore,
+	  example/RedirectFS/.gitignore, lib/.gitignore, lib/mono-fuse/.gitignore,
+	  lib/pkgconfig/.gitignore, src/Mono.Fuse/.gitignore,
+	  src/MonoFuseHelper/.gitignore: Added; ignore generated files.
+	* INSTALL: Added; install information.
+	* src/Mono.Fuse/AssemblyInfo.cs.in: Added; contains assembly version info.
+	* mono-fuse.spec.in: Added; RPM .spec file; thanks to 
+	  Jay Miller <jnmiller@cryptofreak.org> for the original version.
+
+2007-06-29  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* configure.in: My sh-fu needs work.  Properly check the return value of
+	  `gmcs' so I can determine whether it compiled successfully.
+
+2007-06-29  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* configure.in: Use a better check for the
+	  Mono.Unix.Native.NativeConvert.TryCopy() methods, as relying on
+	  libMonoPosixHelper.so is inadequate.
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: Use NativeConvert.TryCopy(), not
+	  NativeConvert.Copy().  (NativeConvert.Copy() was only proposed, but never
+	  made it into an official Mono.Posix release, while .TryCopy did.)
+
+2007-04-17  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* example/HelloFS/hellofs.in, example/RedirectFS/redirectfs.in,
+	  example/RedirectFS/redirects-fh.in: Define DYLD_LIBRARY_PATH so that
+	  example programs work seamlessly on OS X as well as Linux.
+	* lib/mono-fuse/Mono.Fuse.dll.config: Added; Mono dllmap config file so that
+	  MonoFuseHelper is redirected to libMonoFuseHelper.dylib on Mac OS X.
+	* src/Mono.Fuse/Makefile.am: Install the Mono.Fuse.dll.mdb and
+	  Mono.Fuse.dll.config files.
+
+2007-04-17  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/MonoFuseHelper/Makefile.am: Define HAVE_STRUCT_FUSE_ARGS so that
+	  map.c's Mono_Fuse_ToArgs() and Mono_Fuse_FromArgs() will be compiled.
+	  Otherwise, we get an unsatisfied link error when loading MonoFuseHelper.
+
+2007-04-17  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/Mono.Fuse/create-native-map.exe, src/Mono.Fuse/MapAttribute.cs: Update
+	  to latest versions (fixes buggy overflow checking in MonoFuseHelper).
+	* lib/Mono.Fuse/Makefile.am: FUSE_USE_VERSION should be in the .c file, not
+	  the .h file.  Also fixes Mac OS X compilation, as FUSE_USE_VERSION needs
+	  to be defined *before* including <fuse.h>, but <fuse.h> is inserted before
+	  the include of lib/map.h -- bad order.
+
+2007-01-17  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/MonoFuseHelper/Makefile.am: Use $(LIBTOOL), not `libtool', as the
+	  libtool program may go by different names on different platforms (e.g.
+	  glibtool on OS X).
+
+2006-10-31  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* example/HelloFS/HelloFS.cs: Add extra Trace statements; remove unused code.
+
+2006-10-23  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: Add [In,Out] to the
+	  FileSystmeOperationContext parameter in mfh_fuse_get_context().
+	  Otherwise, the data is never marshaled back into managed memory, so all
+	  fields are zero'd out (making the method useless).  Oops!
+
+2006-10-12  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* doc/mono-fuse-docs.source: Update @basefile to contain the actual
+	  basefile.  Allows installed monodoc documentation to work.
+
+2006-10-12  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* doc/Makefile.am: Add `-pretty' so monodocer produces nicely indented XML.
+	* doc/en/Mono.Fuse/DirectoryEntry.xml, doc/en/Mono.Fuse/FileSystem.xml,
+	  doc/en/Mono.Fuse/FileSystemOperationContext.xml,
+	  doc/en/Mono.Fuse/OpenedPathInfo.xml: Flush documentation (largest change
+	  was due to reformatting of XML).  Also used svn version of monodocer to
+	  get proper Generics-formatted method declarations, so
+	  FileSystem.OnReadDirectory now lists a parameter of
+	  System.Collections.Generic.IEnumerable<Mono.Fuse.DirectoryEntry> instead
+	  of System.Collections.Generic.IEnumerable`1[[Mono.Fuse.DirectoryEntry,
+	  Mono.Fuse, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]].
+	* src/Mono.Fuse/create-native-map.exe: Commit latest version; fixes #ifndef
+	  name formatting so that SYMBOL in "#ifndef SYMBOL" doesn't contain `/'.
+
+2006-09-21  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* configure.in: Remove checks for mint.  Mint is dead.
+
+2006-09-21  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* doc/en/Mono.Fuse/FileSystem.xml, doc/en/Mono.Fuse/OpenedPathInfo.xml:
+	  Minor doc updates.
+
+2006-09-20  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* doc/Makefile.am: Create mono-fuse-docs.* files, not mono-fuse.* files.
+	  This matches Gtk#, and allows for clarity if we ever have
+	  mono-fuse-docs.zip and mono-fuse-VERSION.tar.gz in the same directory.
+	* doc/en/index.xml, doc/en/Mono.Fuse.xml, doc/en/Mono.Fuse/DirectoryEntry.xml,
+	  doc/en/Mono.Fuse/FileSystem.xml, 
+	  doc/en/Mono.Fuse/FileSystemOperationContext.xml, 
+	  doc/en/Mono.Fuse/OpenedPathInfo.xml: Add documentation.
+	* doc/en/Mono.Fuse/FileSystemEntry.xml: Renamed to DirectoryEntry.xml.
+	* example/HelloFS/HelloFS.cs: Use DirectoryEntry instead of FileSystemEntry;
+	  use OpenedPathInfo.OpenAccess instead of OpenedPathInfo.OpenReadOnly.
+	* example/RedirectFS/RedirectFS.cs, example/RedirectFS/RedirectFS-FH.cs: Use
+	  DirectoryEntry instead of FileSystemEntry; 
+	  s/OnCloseDirectory/OnReleaseDirectory/.
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: Changes by type:
+	  - FileSystemOperationContext:
+	    - Make sealed (this should only be created internally).
+	    - Constructor is now internal.
+	  - FileSystemEntry: 
+	    - Renamed to DirectoryEntry.
+	    - Renamed Path property to Name.
+	    - Add argument checking to DirectoryEntry constructor. 
+	    - Remove implicit conversion to string (as constructor may generate
+	      exceptions).
+	  - OpenedPathInfo:
+	    - Make seaeled (this should only be created internally).
+	    - Constructor now internal.
+	    - Remove OpenReadOnly, OpenWriteOnly, OpenReadWrite properties 
+	    - Add OpenAccess property.
+	  - FileSystem:
+	    - Now `abstract'.  There are no abstract methods, but it's pointless 
+	      to create instances of this type, as it wouldn't do anything.
+	    - Make constructors protected (to emphasize the above).
+	    - Rename FileSystemName property to Name.
+	    - Rename ImmediateRemoval property to ImmediatePathRemoval.
+	    - Rename DirectIO property to EnableDirectIO.
+	    - Rename Umask property to DefaultUmask.
+	    - Add EnableKernelCache property.
+	    - Rename UserId property to DefaultUserId.
+	    - Rename GroupId property to DefaultGroupId.
+	    - Rename EntryTimeout property to PathTimeout.
+	    - Rename DeletedNameTimeout property to DeletedPathTimeout.
+	    - Change types of Timeout properties to `double' from `int'; changes
+	      PathTimeout, DeletedPathTimeout, AttributeTimeout.
+	    - Rename OnCloseDirectory() method to OnReleaseDirectory() (for 
+	      consistency with OnReleaseHandle).
+	    - Rename Exit() method to Stop().
+	    - Rename parameters of many methods to match the method names -- e.g.
+	      OnReadSymbolicLink() takes a `link' parameter instead of `path',
+	      OnOpenDirectory() takes a `directory' parameter instead of `path', etc.
+
+2006-09-12  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/Mono.Fuse/Makefile.am: Add FileNameMarshaler to the build.
+	* src/Mono.Fuse/Mono.Fuse/FileNameMarshaler.cs: Added; marshals filenames
+	  with any encoding to/from managed code (from
+	  Mono.Unix.Native.FileNameMarshaler).
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: 
+	  - Use the FileNameMarshaler custom marshaler to manipulate filenames 
+	    entering/leaving managed code.  This allows manipulation of filenames 
+	    with non-UTF8 encodings.
+	  - Reimplement FillEntries().  When mfh_invoke_filler() returns 1, it means
+	    that the current entry was not inserted, and needs to be inserted during
+	    the next call.  Previously, if a directory had many files (i.e.
+	    _OnReadDirectory() was called > 2 times), it would "drop" the file that
+	    was passed to mfh_invoke_filler() when it returned 1.  Now, when
+	    mfh_invoke_filler() return 1, we remember this and return the current
+	    entry a 2nd time so that nothing is lost.
+
+2006-09-11  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* configure.in: Fix test for HAVE_MONO_UNIX_NATIVE_COPY_FUNCS; Add check for
+	  `mdassembler' and `monodocer' (from monodoc module); create doc/Makefile.
+	* Makefile.am: Add `doc' directory to the build.
+	* doc/Makefile.am: Added; build the Monodoc documentation.
+	* doc/README: Added; short overview for adding docs to monodoc.
+	* doc/mono-fuse.source: Added; monodoc source file (where in the tree the
+	  Mono.Fuse sources should be placed).
+	* doc/en/index.xml, doc/en/Mono.Fuse.xml, doc/en/Mono.Fuse/FileSystem.xml,
+	  doc/en/Mono.Fuse/FileSystemEntry.xml, 
+	  doc/en/Mono.Fuse/FileSystemOperationContext.xml, 
+	  doc/en/Mono.Fuse/OpenedPathInfo.xml: Added; API documentation stubs.
+	* src/MonoFuseHelper/Makefile.am: Remove automake warning message.
+
+2006-09-11  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* example/HelloFS/HelloFS.cs: Add extended attribute support for the 
+	  `hello' file.
+
+2006-09-11  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: 
+	  - Property renaming: s/Options/FuseOptions/g.
+	  - Method renaming:
+	    s/OnSetPathExtendedAttributes/OnSetPathExtendedAttribute/g;
+	    s/OnGetPathExtendedAttributes/OnGetPathExtendedAttribute/g;
+	  - Method argument changing:
+	    s/OnListPathExtendedAttributes(string, byte[], out int)/
+	      OnListPathExtendedAttributes(string, out string[])/
+	* example/HelloFS/HelloFS.cs: s/\.Options/.FuseOptions/g.
+	* example/HelloFS/Makefile.am: Add `-debug+' to compile line for
+	  HelloFS.exe; add Mono.Fuse.dll.mdb for line numbers in stack traces.
+	* example/RedirectFS/RedirectFS.cs, example/RedirectFS/RedirectFS-FH.cs:
+	  Update to latest OnSetPathExtendedAttribute(),
+	  OnGetPathExtendedAttribute(), OnListPathExtendedAttributes() methods.
+
+2006-09-09  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/Mono.Fuse/Mono.Fuse.FileSystem.cs: 
+	  - Add new public type FileSystemEntry, which provides both a Path string
+	    and a Mono.Unix.Native.Stat instance that can be passed to FUSE.  The
+	    Stat instance will _only_ be used if Stat.st_ino is non-zero.
+	  - Change FileSystemOperationContext to use read-only properties instead of
+	    fields, as this information can't be changed.  Change ProcessId to `int'
+	    instead of `long', for consistency with Mono.Posix.
+	  - Change FileSystem.OnReadDirectory() to use IEnumerable<FileSystemEntry>
+	    instead of IEnumerable<string>.  This allows sub-classes to (optionally) 
+	    provide Stat information to FUSE.  (Currently FUSE will only use the 
+	    st_ino & st_mode fields of the Stat, though I imagine this may be 
+	    expanded in the future.)
+	* src/MonoFuseHelper/mfh.c: Use current field names in
+	  FileSystemOperationContext.
+	* example/HelloFS/HelloFS.cs:
+	  s/IEnumerable<string>/IEnumerable<FileSystemEntry>/g (migrate to latest
+	  Mono.Fuse.FileSystem.OnReadDirectory() prototype).
+	* example/RedirectFS/RedirectFS.cs, example/RedirectFS/RedirectFS-FH.cs: 
+	  s/IEnumerable<string>/IEnumerable<FileSystemEntry>/g (migrate to latest
+	  Mono.Fuse.FileSystem.OnReadDirectory() prototype); Fill in
+	  FileSystemEntry.Stat for use by FUSE.
+
+2006-09-08  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: 
+	  - Redo OnReadDirectory() implementation to use a IEnumerator instead of a
+	    string[].  The previous approach required reading in the entire
+	    directory all at once, which would slow things down for large
+	    directories.  The new approach allows FUSE to invoke _OnReadDirectory()
+	    multiple times to read from the same enumerator, allowing directory
+	    entries to be returned in "chunks" instead of all at once.
+	    Plus, it's damn cool to use a C# iterator to implement 
+	    OnReadDirectory() (see HelloFS.cs & RedirectFS-FH.cs).
+	  - Remove check for OnCreateHandle()/OnOpenHandle() & OnReleaseHandle()
+	    consistency -- this broke the build (HelloFS has OnOpenHandle() but not
+	    OnReleaseHandle(), and it doesn't need OnReleaseHandle() either).
+	* src/MonoFuseHelper/mfh.c: Help implement new OnReadDirectory() interface;
+	  add mfh_invoke_filler() helper method.
+	* example/HelloFS/HelloFS.cs, example/RedirectFS/RedirectFS.cs,
+	* example/RedirectFS/RedirectFS-FH.cs: Implement updated OnReadDirectory() 
+	  interface.  (Using iterators for OnReadDirectory is cool; especially
+	  check out the new RedirectFS-FH.cs implementation.)
+
+2006-09-07  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: 
+	  - Add initial validation for method overriding -- some methods come in 
+	    sets.  For example, if OnOpenDirectory is overridden, OnCloseDirectory() 
+	    should be as well (to ensure that any handles are closed if desired).  
+	    Perform such sanity checking.  
+	  - Correct GetOperations() so that the methods it finds via Reflection 
+	    actually override the methods it thinks are being overridden.
+
+2006-09-07  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* example/HelloFS/HelloFS.cs: Update help text to show FUSE options.
+	* example/RedirectFS/RedirectFS.cs, example/RedirectFS/RedirectFS-FH.cs: 
+	  Update help text to show FUSE options.  Alter command line arguments to be
+	  "program mountpoint basedir" (instead of "program basedir mountpoint") so
+	  that it matches the FUSE-generated help text.
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: Add ShowFuseHelp static method to
+	  display FUSE help options to stderr.
+	* src/MonoFuseHelper/mfh.c: Add mfh_show_fuse_help() helper.
+
+2006-09-07  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* configure.in: Generate Makefile for new directory example/RedirectFS.
+	* src/Mono.Fuse/MapAttribute.cs: Update to latest mono-tools version.
+	* src/Mono.Fuse/create-native-map.exe: Update to latest mono-tools version
+	  (removes support for MapAttribute.NativeSymbolPrefix, as this is no longer
+	  useful since MonoPosixHelper doesn't have a public API).
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: 
+	  - Rename OpenedPathInfo.FileHandle to OpenedPathInfo.Handle (as the 
+	    handle can be used by both files & directories).  
+	  - Change ReadSymbolicLinkCb/OnReadSymbolicLink() as Mono can't pass a 
+	    StringBuilder from native to managed code (it's a managed->native 
+	    construct), so use a workable alternative.  The new
+	    ``OnReadSymbolicLink(string path, out string target)'' prototype is also
+	    simpler for subclasses.
+	  - Native code can't pass an OpenedPathInfo into managed code via the
+	    delegates, as the delegates need to modify OpenedPathInfo.Handle and
+	    have this change propogate back to native code.  Ideally, this would be 
+	    fixed by making the delegates have an "[In, Out] OpenedPathInfo info"
+	    parameter (instead of the current "IntPtr" + manual marshal approach),
+	    but this causes Mono to die -- bugzilla 79298.  This is now fixed, but
+	    only in HEAD, so we need the ugly workaround for 1.1.13.x support.
+	  - Add support for parsing the `-f' FUSE argument (use foreground
+	    operation; ignored, as we can only support foreground operation).
+	  - Don't throw Exception if MountPoint can't be mounted or mfh_fuse_new
+	    fails, throw a NotSupportedException.  (Perhaps I should use a 
+	    different type?)
+	  - Remove some Console.WriteLine()s.
+	* src/MonoFuseHelper/Makefile.am: $(buildlibdir)/libMonoFuseHelper.so should
+	  be updated when its sources are updated.
+	* src/MonoFuseHelper/mfh.c: 
+	  - Add Mono_Fuse_FromOpenedPathInfo and Mono_Fuse_ToOpenedPathInfo (for 
+	    struct fuse_file_info conversion), so it can be invoked by Mono.Fuse.dll.  
+	  - Remove support for fuse_file_info->OpenedPathInfo conversion from 
+	    MonoFuseHelper, this must now be done in managed code (see #79298).
+	  - mfh_readdir: Check return value of `filler' method to check for errors.
+	* example/Makefile.am: Add new directory RedirectFS.
+	* example/RedirectFS/Makefile.am: Added; build RedirectFS programs.
+	* example/RedirectFS/RedirectFS.cs: Added; FS which forwards ("redirects") 
+	  all FileSystem operations to the underlying filesystem.
+	* example/RedirectFS/redirectfs.in: Added; runs RedirectFS.exe.
+	  Syntax: redirectfs BASEDIR MOUNT-POINT
+	  e.g. ./redirects /tmp t
+	* example/RedirectFS/RedirectFS-FH.cs: Added; FS which forwards ("redirects") 
+	  all FileSystem operations to the underlying filesystem.
+	  This uses OpenedPathInfo.Handle to track file & directory handles instead
+	  of re-opening files & directories all the time (compare to RedirectFS.cs).
+	* example/RedirectFS/redirectfs-fh.in: Added; runs RedirectFS-FH.exe.
+	  Syntax: redirectfs-fh BASEDIR MOUNT-POINT
+	  e.g. ./redirects-fh /tmp t
+
+2006-09-05  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: Mass API renaming for consistency.
+	  - s/OpenedFileInfo/OpenedPathInfo/g (for consistency with method naming
+	    convention, below, as it's used with both files & directories).
+	  - Remove FileSystemOperationContext.PrivateData (it's used internally).
+	  - Rename properties: s/EnableDebugOutput/EnableFuseDebugOutput/.
+	  - Add MultiThreaded property (default true), remove StartMultithreaded()
+	    method.  Start() checks the MultiThreaded property and calls the
+	    appropriate FUSE method for (non-) multithreaded use.
+	  - Make OpenedPathInfo parameter 2nd parameter instead of the (variable) 
+	    last parameter (so that `out' parameters can consistently be the last 
+	    parameter and paramater placement is consistent).
+	  - Change method names for consistency, ease understanding, and help the 
+	    impending documentation effort to include one of the following words:
+	    - Directory: Method deals with directories and not files.
+	      - OnCreateDirectory(), OnRemoveDirectory(), OnOpenDirectory(),
+	        OnReadDirectory(), OnCloseDirectory(), OnSynchronizeDirectory().
+	    - File: Method deals with files and not directories.
+	      - OnCreateSpecialFile(), OnRemoveFile(), OnTruncateFile().
+	    - FileSystem: Method deals with the file system as a whole.
+	      - OnGetFileSystemStatus().
+	    - Link: Method deals with actual links (symbolic & hard links)
+	      - OnCreateHardLink(), OnCreateSymbolicLink(), OnReadSymbolicLink().
+	    - Handle: Method deals with a "handle" to an opened file.
+	      - OnCreateHandle(), OnOpenHandle(), OnReadHandle(), OnWriteHandle(),
+	        OnFlushHandle(), OnReleaseHandle(), OnSynchronizeHandle(),
+	        OnTruncateHandle(), OnGetHandleStatus().
+	    - Path: Method works on files and directories.
+	      - OnAccessPath(), OnGetPathStatus(), OnRenamePath(), 
+	        OnChangePathPermissions(), OnChangePathOwner(), OnChangePathTimes(),
+	        OnGetPathExtendedAttributes(), OnListPathExtendedAttributes(),
+	        OnSetPathExtendedAttributes(), OnRemovePathExtendedAttribute().
+	* src/MonoFuseHelper/mfh.c: Deal with s/OpenedFileInfo/OpenedPathInfo/g.
+	* example/HelloFS/HelloFS.cs: Deal with FileSystem method name changes.
+
+2006-09-03  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* COPYING: Specify license as MIT/X11.
+	* example/HelloFS/HelloFS.cs, src/Mono.Fuse/FileSystem.cs,
+	  src/MonoFuseHelper/mfh.c, src/MonoFuseHelper/mph.c: Add license.
+
+2006-09-01  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* README: Add note about using fusermount to unmount FUSE filesystems.
+
+2006-09-01  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* configure.in: Set required Mono version is 1.1.13 (maybe could be 
+	  lowered?  No idea); add check for presence of Mono_Posix_ToStat in
+	  MonoPosixHelper -- if found, then we should have the new
+	  Mono.Unix.Native.NativeConvert.Copy methods, otherwise we need to roll our
+	  own equivalents.  This allows portability to "down-level" mono versions.
+	* src/Mono.Fuse/create-native-map.exe: Update; this version doesn't skip
+	  prototypes for structs within a different assembly, it generates struct
+	  declarations for all structs referenced (needed to get struct decls for
+	  Stat, Statvfs, etc.)
+	* src/Mono.Fuse/Makefile.am: Add --rename-member arguments to
+	  create-native-map call so Stat can be used properly.
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: Only use NativeConvert.Copy methods
+	  if HAVE_MONO_UNIX_NATIVE_COPY_FUNCS is defined, otherwise use the
+	  MonoFuseHelper internal methods.
+	* src/MonoFuseHelper/Makefile.am: Add mph.c to the build.
+	* src/MonoFuseHelper/mph.c: Added; structure copy functions from
+	  MonoPosixHelper for copying Stat, Statvfs, & Utimbuf between managed &
+	  native code.
+
+2006-09-01  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* README: Add comments about hellofs command-line arguments, capturing trace
+	  messages, and FUSE performance timing.
+	* example/HelloFS/hellofs.in: Modify setting of LD_LIBRARY_PATH so that it
+	  retains the existing $LD_LIBRARY_PATH value.  Remove -odebug parameter.
+	  If you want "full" trace output, set MONO_TRACE_LISTENER for the managed
+	  trace output, and add -odebug for FUSE trace output, e.g.
+	    MONO_TRACE_LISTENER=Console.Out:### ./hellofs -odebug mount-point
+
+2006-08-31  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/Mono.Fuse/Makefile.am: Remove dependency on external
+	  create-native-map.exe and a public Mono.Unix.Native.MapAttribute (as the
+	  latter will no longer be public).  Add `update-map-source' target which
+	  uses pkg-config to copy the "reference" MapAttribute.cs & 
+	  create-native-map.exe programs from their installed locations.
+	* src/Mono.Fuse/create-native-map.exe, src/Mono.Fuse/MapAttribute.cs: Added;
+	  cached versions of create-native-map.exe & MapAttribute.cs as provided by
+	  pkg-config and the create-native-map.pc file.
+
+2006-08-31  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* configure.in: Remove use of mono-posix-helper.pc, and use glib-2.0
+	  instead.
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: Change the delegates so that they
+	  use only native types, not managed types.  Change all of the _On*
+	  methods to do the native->managed conversion for parameters and the return
+	  value (depends upon addition of Mono.Unix.Native.NativConvert.Copy()
+	  methods to perform structure conversion).  Make OpenedFileInfo.flags
+	  internal, so that FileSystem can convert the value when necessary, 
+	  as MonoFuseHelper can't do the enum convert.
+	* src/MonoFuseHelper/Makefile.am: Remove use of MPH, and add GLIB flags.
+	* src/MonoFuseHelper/mfh.c: Remove use of MonoPosixHelper functions (as
+	  Mono.Fuse.FileSystem does the type conversions now).  Don't copy-out
+	  OpenedFileInfo.flags, as this enum must be converted in managed, and I
+	  don't see much point in having another conversion on exit when I can just
+	  skip the copy-out (thus preserving the original value).
+
+2006-08-31  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* example/HelloFS/HelloFS.cs: Make creation of data_im_str thread-safe, so
+	  that it's only created once and reading threads don't see an intermediate
+	  state.
+
+2006-08-28  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* example/HelloFS/HelloFS.cs: Rename the ``data'' file to ``data.im'' (this
+	  is a text file with 100MB of data), and replace ``data'' with a file which
+	  computes its content at runtime (a time/space tradeoff).  The ``data.im''
+	  file isn't available by default; pass --data.im-in-memory to make it
+	  available (note that this file will be created in-memory the first time
+	  its content is accessed).  Add command-line argument parsing.  Use
+	  Trace.WriteLine instead of Console.WriteLine.
+	* lib/pkgconfig/mono-fuse.pc.in: Use @libdir@ instead of
+	  ${prefix}/@reloc_libdir@.  I'm not sure what @reloc_libdir@ is supposed to
+	  be, and it isn't currently expanded anyway.
+	* src/Mono.Fuse/Makefile.am: Add the -d:TRACE define.  Add --public-macro
+	  and --impl-header to the create-native-map call (create-native-map no
+	  longer supports MapHeaderAttribute).
+	* src/Mono.Fuse/Mono.Fuse/FileSystem.cs: Remove use of
+	  Mono.Unix.Native.MapHeaderAttribute (use create-native-map arguments
+	  instead).  Add public argument parsing support (so that HelloFS can have
+	  its own command-line args in addition to the FUSE args).  Use Trace
+	  instead of Console for trace messages.  Add a `catch(Exception)' handler
+	  so we can trace exception messages (helps debugging).
+
+2006-08-25  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* src/MonoFuseHelper/mfh.c: Remove debug printf statements.
+
+2006-08-24  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* Makefile.am: Build the `lib' directory.
+	* lib/mono-fuse/Makefile.am: Don't install anything;
+	  src/Mono.Fuse/Makefile.am already handles Mono.Fuse.dll installation.
+
+2006-08-24  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* configure.in: Don't forget to generate lib/mono-fuse/Makefile!
+
+2006-08-24  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/Makefile.am: Build the mono-fuse directory as well
+	* lib/mono-fuse/Makefile.am: Added; installs Mono.Fuse.dll.
+
+2006-08-24  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* NEWS: Added
+	* configure.in: Use AM_PROG_LIBTOOL, not AC_PROG_LIBTOOL, to satisfy
+	  autogen.sh's checking.
+
+2006-08-24  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* AUTHORS, COPYING, README: Added (for autoconf)
+	* autogen.sh, configure.in, Makefile.am, example/Makefile.am,
+	  example/HelloFS/Makefile.am, lib/Makefile.am, lib/pkgconfig/Makefile.am,
+	  src/Makefile.am, src/Mono.Fuse/Makefile.am,
+	  src/MonoFuseHelper/Makefile.am: Added (auto* build system files).
+	* lib/map.c, lib/map.h: Removed (generated by the build; no need to keep
+	  these under version control).
+	* lib/mfh.c: Renamed to src/MonoFuseHelper/mfh.c
+	* lib/mph.c: Removed.  (Functions added to MonoPosixHelper library.)
+	* lib/mono-fuse/HelloFS.cs: Renamed to example/HelloFS/HelloFS.cs
+	* example/HelloFS/hellofs.in: Added; template for `hellofs' program.
+	* lib/mono-fuse/MakeMap.Test.cs, lib/mono-fuse/make-map.cs,
+	  lib/mono-fuse/test.c.ref, lib/mono-fuse/test.cs.ref,
+	  lib/mono-fuse/test.h.ref, lib/mono-fuse/test.xml.ref: Removed.
+	  make-map.exe renamed to create-native-map.exe, moved into
+	  mcs svn module under mcs/tools/create-native-map.
+	* lib/pkgconfig/mono-fuse.pc.in: Remove Requires line (managed code doesn't
+	  depend on glib-2.0 or mono), add Mono.Posix.dll to Libs: line.
+	* lib/mono-fuse/FileSystem.cs: renamed to
+	  src/Mono.Fuse/Mono.Fuse/FileSystem.cs
+
+2006-08-21  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/map.c, lib/map.h: Flush (current make-map output for Mono.Fuse.dll).
+	* lib/mono-fuse/MakeMap.Test.cs: Add additional tests for copying nested
+	  structures.
+	* lib/mono-fuse/make-map.cs: Add support for copying nested structures.
+	* lib/mono-fuse/test.c.ref, lib/mono-fuse/test.h.ref: Flush.
+
+2006-08-21  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mono-fuse/MakeMap.Test.cs: Add enum (to test enum conversion code),
+	  class w/o namespace (generated NRE within make-map).
+	* lib/mono-fuse/make-map.cs:
+	  - s/ExportPrefix/NativeSymbolPrefix/g (current Mono.Posix.dll naming);
+	  - check for t.Namespace==null before looking using
+	    Configuration.NamespaceRenames (Dictionary`2 doesn't like null keys);
+	  - HeaderFileGenerator needs to know about member renames (so it uses the
+	    renamed member in conversion code);
+	  - Clean up enumeration generation for readablility.
+	  - Remove dependency on <mono/posix/limits.h> (include macros within file
+	    with a _cnm prefix).
+	* lib/mono-fuse/test.c.ref, lib/mono-fuse/test.cs.ref,
+	  lib/mono-fuse/test.h.ref, lib/mono-fuse/test.xml.ref: Flush.
+
+2006-08-21  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mono-fuse/make-map.cs: Remove debug statements.
+
+2006-08-21  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mono-fuse/Makefile: Add --library when generating ../map.c, ../map.h.
+	* lib/mono-fuse/make-map.cs: Use Mono.Unix.Native.MapAttribute.ExportPrefix
+	  to get the namespace of a member, in addition to --rename-namespace.  This
+	  is necessary for easier cross-assembly namespace renames -- Mono.Posix.dll
+	  uses a Mono_Posix C namespace, but the default algorithm would be a
+	  Mono_Unix_Native prefix.  Thus, two choices for correct behavior: use
+	  MapAttribute.ExportPrefix within Mono.Posix.dll, allowing all consumers to
+	  get the correct prefix By Default (It Just Works), or require that all
+	  consumers add --rename-namespace arguments (more clunky, more difficult to
+	  diagnose, not as "version proof").
+
+2006-08-20  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mono-fuse/make-map.cs: Add new arguments: --autoconf-member,
+	  --exclude-native-symbol, --library, --rename-member, --rename-namespace.
+	  These are to remove the necessity of
+	  Mono.Unix.Native.MapAttribute.Optional (--autoconf-member) and
+	  MapAttribute.ExportPrefix (--rename-namespace), while adding much needed
+	  support for the DllImport libraries to generate prototypes for
+	  (--library), symbol exclusion (to remove Mono_Posix_Stdlib_snprintf;
+	  --exclude-native-symbol), and member renaming (curse you glibc making
+	  st_atime a macro! See --rename-member).
+	* lib/mono-fuse/Makefile: Use new make-map.exe arguments to test their
+	  behavior when building test.c/test.h.
+	* lib/mono-fuse/MakeMap.Test.cs: Add types/members to test new make-map.cs
+	  arguments.
+	* lib/mono-fuse/test.c.ref, lib/mono-fuse/test.h.ref: Flush (new expected
+
+2006-08-20  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/map.c, lib/map.h: Flush.
+	* lib/mono-fuse/FileSystem.cs: Use Mono.Unix.Native.MapHeaderAttribute
+	  instead of Mono.Unix.Native.HeaderAttribute.
+
+2006-08-17  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mono-fuse/make-map.cs: Add a newline after the implementation macro section.
+
+2006-08-17  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mono-fuse/MakeMap.Test.cs: Use of
+	  MapHeaderAttribute.ImplementationMacro and
+	  MapHeaderAttribute.ImplementationIncludeFile.
+	* lib/mono-fuse/make-map.cs: Add support for
+	  MapHeaderAttribute.Implementation* properties within the .c file.
+	* lib/mono-fuse/test.c.ref, lib/mono-fuse/test.h.ref: Sync with current
+	  make-map.exe output.
+
+2006-08-16  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/map.c, lib.map.h: Flush (new formatting due to make-map changes
+	* lib/mono-fuse/MakeMap.Test.cs: Use MapHeaderAttribute; remove
+	  [Map("struct qux")] from Qux (can't compile this).
+	* lib/mono-fuse/Makefile: Improve dependencies to ensure things are rebuilt
+	  when needed; add libtest.so target (to make sure test.c is valid C).
+	* lib/mono-fuse/make-map.cs: Add support for Mono.Unix.Native.MapHeaderAttribute;
+	  formatting improvements.
+	* lib/mono-fuse/test.c.ref, lib/mono-fuse/test.h.ref: Flush.
+
+2006-08-14  Jonathan Pryor  <jonpryor@vt.edu>
+
+	API Cleanup -- return values should only be for reporting errors, not for
+	reporting additional information (e.g. read(2) & write(2) overload the return
+	value; we don't want to do that, as it's inconsistent).
+
+	* lib/map.h: Sync with mono-fuse/FileSystem.cs
+	* lib/mfh.c (mfh_read, mfh_write, mfh_setxattr, mfh_listxattr): Add
+	  additional argument to get number bytes read/written from buffer.
+	* lib/mono-fuse/FileSystem.cs: Change ReadCb(), WriteCb(),
+	  GetExtendedAttributesCb(), ListExtendedAttributesCb() so that return type
+	  is Errno (consistency) and an extra `out' parameter is added to hold the
+	  number of bytes read/written from the buffer.
+	* lib/mono-fuse/HelloFS.cs: Sync with latest API.
+
+2006-08-14  Jonathan Pryor  <jonpryor@vt.edu>
+
+	Re-enable bounds checking in struct/class conversion functions; API cleanup.
+
+	* lib/map.h: Sync with FileSystem.cs
+	* lib/mph.c: Add more conversion functions.
+	* lib/mfh.c: Fully implement all forwarding functions; remove some warnings;
+	  fix segfault in _free_argv().
+	* lib/mono-fuse/FileSystem.cs: Use properties, not public fields; add
+	  OpenReadOnly, OpenWriteOnly, OpenReadWrite helpers (to remove ugly
+	  ((OpenFlags) ((int) fi.Flags & 3)) == OpenFlags.O_RDONLY sillyness).  Stat
+	  and Statvfs are `out', not `ref'.  Correct marshaling of byte[]s within
+	  delegates, as some are `const' and some aren't (so no need to copy-in or
+	  copy-out if not appropriate).  Use mfh_fuse_ prefix instead of mfh_.
+	* lib/mono-fuse/HelloFS.cs: Use latest API.
+
+2006-08-09  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mono-fuse/FileSystem.cs:
+	  - Remove DestroyCb() delegate, OnDestroy() method.  It's not needed, as
+	    FileSystem.Dispose() cleans up opsp, and OnDestroy() was only called
+	    from fuse_destroy(), which is also invoked from Dispose().
+	  - Add wrappers for all protected virtual methods to act as a "backstop"
+	    for exceptions.  We cannot allow exceptions to enter native code from
+	    managed code (as this would likely kill the process, with Mono's
+	    exception handler "cleaning up" the native callstack, which can't make
+	    FUSE happy).  If an exception is emitted, EIO is returned to FUSE.
+	    These methods can also be used to remove unnecessary parameters, such as
+	    the `WriteCb' `size' parameter (which becomes buf.Length).
+	* lib/mono-fuse/HelloFS.cs: Add a `data' file, which contains 96MB of plain
+	  text data (useful for timing analysis to see the overhead from
+	  various forms of marshaling).  Update to use new OnRead() parameters.
+
+2006-08-08  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mono-fuse/FileSystem.cs: Correct FUSE argument parsing (bad regex used).  
+	  GetFuseArgs() needs to prepend the executable name for proper FUSE operation.  
+	  We're now able to start an app and pass `-d' to get FUSE debugging messages.
+
+2006-08-08  Jonathan Pryor  <jonpryor@vt.edu>
+
+	Flush.
+
+2006-08-08  Jonathan Pryor  <jonpryor@vt.edu>
+
+	Get things (somewhat) working -- we're now able to read a file contents
+	through FUSE, but we're not able to opendir/readdir. :-/
+
+	* lib/Makefile: Add -g, and libMonoFuseHelper.so should link to
+	  libMonoPosixHelper.so.
+	* lib/map.h: Synchronize with FileSystem.cs
+	* lib/mfh.c: Disable some functions so that I don't need to write as many
+	  stub functions in lib/mph.c; fix mfh_read, mfh_write (return value
+	  nonsense; this needs to be fixed later).
+	* lib/mono-fuse/FileSystem.cs: Fix prototypes of ReadCb and WriteCb
+	  delegates, as we need [MarshalAs] declarations on the byte[] arrays so
+	  that the marshaler knows what to do with them.  Update all byte[] usage
+	  within delegates.  Mono doesn't like ``[Out] out string[] paths'' (as used
+	  in ReadDirectoryCb()), so replace with `out IntPtr paths' and manually
+	  marshal the string[].
+	* lib/mono-fuse/Makefile: Use global Mono.Posix.dll file, not local copy;
+	* add `hellofs' target to run HelloFS.exe with LD_LIBRARY_PATH set.
+	* lib/mono-fuse/HelloFS.cs: Add C.WL helpers (for tracing); fix OnOpen() so
+	  that we can read a file (it's O_RDONLY check was wrong); print out parsed
+	  command line arguments (showing that FileSystem.Parse() is broken --
+	  that's next to fix).
+	* lib/mono-fuse/make-map.cs: Don't insert types into `structs' table when a
+	  type with [Map] is found, use RecordTypes() instead (so that we record all
+	  nested types as well).  Warnings should be prefixed with "warning: ".
+	  Don't always generate Namespace_ToType/Namespace_FromType declarations,
+	  but only if MapAttribute.NativeType was specified.  Allows for [Map] on
+	  structures that need to be exported from an assembly but aren't used
+	  within shared methods.
+	* lib/mph.c: Let this compile.
+
+2006-08-05  Jonathan Pryor  <jonpryor@vt.edu>
+
+	Include all correct .o files into libMonoFuseHelper.so
+
+	Use correct return types in fuse_* methods.
+
+2006-08-05  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mono-fuse/FileSystem.cs: Remove [Map] from Mono.Fuse.Operations, as it 
+	  cannot be assigned to `struct fuse_operations'.  Add necessary DllImport's.
+	* lib/mono-fuse/HelloFS.cs: Fix to match new OnReadDirectory() prototype.
+
+2006-08-05  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mfh.c: Add implementation of mfh_readdir().
+
+2006-08-05  Jonathan Pryor  <jonpryor@vt.edu>
+
+	* lib/mono-fuse/FileSystem.cs: Add necessary Header attribute so that map.c/map.h are
+	  generated sanely.
+
+2006-08-05  Jonathan Pryor  <jonpryor@vt.edu>
+
+	Add unit test for make-map.exe, check & check-update targets to Makefile, and
+	expected output for unit tests.
+
+2006-08-02  Jonathan Pryor  <jonpryor@vt.edu>
+
+	Provide implementations for most of the mfh_* functions.
+	Remove backup files.
+
+2006-08-02  Jonathan Pryor  <jonpryor@vt.edu>
+
+	Build libMonoFuseHelper.so.
+
+2006-08-01  Jonathan Pryor  <jonpryor@vt.edu>
+
+	Add files for libMonoFuseHelper.so and Makefile to build libMonoFuseHelper.so.
+
+2006-08-01  Jonathan Pryor  <jonpryor@vt.edu>
+
+	Current Mono.Fuse managed code implementation.
+
+2006-07-22  Jonathan Pryor  <jonpryor@vt.edu>
+
+	Initial Import.
+

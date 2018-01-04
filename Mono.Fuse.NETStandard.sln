@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Fuse.NETStandard", "Mono.Fuse.NETStandard\Mono.Fuse.NETStandard.csproj", "{247EAF60-7B35-444D-9B7D-13CBD76B7FA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloFS", "example\HelloFS\HelloFS.csproj", "{FF21B641-C21D-401B-9450-E68DFDA09C07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateNativeMap", "CreateNativeMap\CreateNativeMap.csproj", "{7F34C644-632E-4271-A1F9-114037DF6311}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedirectFS", "example\RedirectFS\RedirectFS.csproj", "{11E71BC7-004B-4CB5-BA03-86E160199D78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedirectFS-FH", "example\RedirectFS-FH\RedirectFS-FH.csproj", "{1D5F7569-C773-422B-B783-3F1775816D45}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{85A3668F-D9E7-4794-8723-4F3767008CB9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{247EAF60-7B35-444D-9B7D-13CBD76B7FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{247EAF60-7B35-444D-9B7D-13CBD76B7FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{247EAF60-7B35-444D-9B7D-13CBD76B7FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{247EAF60-7B35-444D-9B7D-13CBD76B7FA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF21B641-C21D-401B-9450-E68DFDA09C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF21B641-C21D-401B-9450-E68DFDA09C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF21B641-C21D-401B-9450-E68DFDA09C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF21B641-C21D-401B-9450-E68DFDA09C07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F34C644-632E-4271-A1F9-114037DF6311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F34C644-632E-4271-A1F9-114037DF6311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F34C644-632E-4271-A1F9-114037DF6311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F34C644-632E-4271-A1F9-114037DF6311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11E71BC7-004B-4CB5-BA03-86E160199D78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11E71BC7-004B-4CB5-BA03-86E160199D78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11E71BC7-004B-4CB5-BA03-86E160199D78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11E71BC7-004B-4CB5-BA03-86E160199D78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D5F7569-C773-422B-B783-3F1775816D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D5F7569-C773-422B-B783-3F1775816D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D5F7569-C773-422B-B783-3F1775816D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D5F7569-C773-422B-B783-3F1775816D45}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{11E71BC7-004B-4CB5-BA03-86E160199D78} = {85A3668F-D9E7-4794-8723-4F3767008CB9}
+		{1D5F7569-C773-422B-B783-3F1775816D45} = {85A3668F-D9E7-4794-8723-4F3767008CB9}
+		{FF21B641-C21D-401B-9450-E68DFDA09C07} = {85A3668F-D9E7-4794-8723-4F3767008CB9}
+	EndGlobalSection
+EndGlobal
