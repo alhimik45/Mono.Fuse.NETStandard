@@ -52,7 +52,6 @@ namespace Mono.Fuse.NETStandard.Samples {
 
 		public HelloFs ()
 		{
-			Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 			Trace.WriteLine ("(HelloFS creating)");
 			hello_attrs ["foo"] = Encoding.UTF8.GetBytes ("bar");
 		}
