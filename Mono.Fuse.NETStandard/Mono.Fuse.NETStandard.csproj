@@ -3,8 +3,8 @@
     <AssemblyTitle>Mono.Fuse.NETStandard.dll</AssemblyTitle>
     <AssemblyName>Mono.Fuse.NETStandard</AssemblyName>
     <PackageId>Mono.Fuse.NETStandard</PackageId>
-    <PackageVersion>1.0.0-pre2</PackageVersion>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/alhimik45/Mono.Fuse.NETStandard/master/LICENSE</PackageLicenseUrl>
+    <PackageVersion>1.0.0</PackageVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/alhimik45/Mono.Fuse.NETStandard</PackageProjectUrl>
     <RepositoryUrl>https://github.com/alhimik45/Mono.Fuse.NETStandard</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -21,6 +21,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0-beta3" />
+    <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
   </ItemGroup>
 </Project>

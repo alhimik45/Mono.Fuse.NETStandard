@@ -8,7 +8,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0-beta3" />
+    <PackageReference Include="Mono.Posix.NETStandard" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mono.Fuse.NETStandard\Mono.Fuse.NETStandard.csproj" />
