@@ -22,7 +22,7 @@ build_managed () {
 
 build_native () {
     dotnet run -p CreateNativeMap/CreateNativeMap.csproj -c "$CONFIGURATION" --library=MonoFuseHelper "Mono.Fuse.NETStandard/bin/$CONFIGURATION/netstandard2.0/Mono.Fuse.NETStandard.dll" buildlibs/map
-    INCLUDES="-I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/fuse -Ibuildlibs/"
+    INCLUDES="-I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include -I/usr/include/fuse -I/usr/lib/glib-2.0/include -Ibuildlibs/"
     libtool --mode=compile gcc -D_FILE_OFFSET_BITS=64 $INCLUDES -g -O2 -MT buildlibs/mfh.lo -MD -MP -c -o buildlibs/mfh.lo MonoFuseHelper/mfh.c
     libtool --mode=compile gcc -D_FILE_OFFSET_BITS=64 $INCLUDES -g -O2 -MT buildlibs/map.lo -MD -MP -c -o buildlibs/map.lo buildlibs/map.c
     libtool --mode=link gcc -g -O2 -no-undefined -avoid-version -o buildlibs/libMonoFuseHelper.la -rpath /usr/local/lib buildlibs/mfh.lo buildlibs/map.lo -lglib-2.0 -lfuse -pthread
