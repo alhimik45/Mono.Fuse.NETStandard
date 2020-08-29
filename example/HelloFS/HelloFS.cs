@@ -166,10 +166,15 @@ namespace Mono.Fuse.NETStandard.Samples {
 					return 0;
 				_value = hello_attrs [name];
 			}
-			if (value.Length < _value.Length) {
-				return Errno.ERANGE;
+
+			if (value != null)
+			{
+				if (value.Length < _value.Length) {
+					return Errno.ERANGE;
+				}
+
+				Array.Copy(_value, value, _value.Length);
 			}
-			Array.Copy (_value, value, _value.Length);
 			bytesWritten = _value.Length;
 			return 0;
 		}

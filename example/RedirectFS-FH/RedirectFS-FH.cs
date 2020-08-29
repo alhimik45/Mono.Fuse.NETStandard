@@ -337,7 +337,7 @@ namespace Mono.Fuse.NETStandard.Samples {
 
 		protected override Errno OnGetPathExtendedAttribute (string path, string name, byte[] value, out int bytesWritten)
 		{
-			int r = bytesWritten = (int) Syscall.lgetxattr (basedir+path, name, value, (ulong) value.Length);
+			int r = bytesWritten = (int) Syscall.lgetxattr (basedir+path, name, value, (ulong) (value?.Length ?? 0));
 			if (r == -1)
 				return Stdlib.GetLastError ();
 			return 0;
