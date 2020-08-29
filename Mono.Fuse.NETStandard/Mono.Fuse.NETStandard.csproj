@@ -3,7 +3,7 @@
     <AssemblyTitle>Mono.Fuse.NETStandard.dll</AssemblyTitle>
     <AssemblyName>Mono.Fuse.NETStandard</AssemblyName>
     <PackageId>Mono.Fuse.NETStandard</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/alhimik45/Mono.Fuse.NETStandard</PackageProjectUrl>
     <RepositoryUrl>https://github.com/alhimik45/Mono.Fuse.NETStandard</RepositoryUrl>
