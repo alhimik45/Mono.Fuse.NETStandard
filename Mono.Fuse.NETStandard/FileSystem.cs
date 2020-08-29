@@ -1316,7 +1316,7 @@ namespace Mono.Fuse.NETStandard {
 					}
 					if (size == 0)
 						bytesWritten = bytesNeeded;
-					if (size < (ulong) bytesNeeded) {
+					else if (size < (ulong) bytesNeeded) {
 						errno = Errno.ERANGE;
 					}
 					else {
